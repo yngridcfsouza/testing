@@ -1,26 +1,47 @@
-import { expect, it } from "vitest";
+import { expect, it, describe } from "vitest";
 import { CourseMapper } from "./CourseMapper";
 
-it('should convert a CourseAPI to a CourseDomain', () => {
-  const course = CourseMapper.toDomain({
-    course:{
+describe('toDomain', () => {
+  it('should convert a CourseAPI to a CourseDomain', () => {
+    const course = CourseMapper.toDomain({
+      course:{
+        name: 'Curso de React',
+        tags: ['React'],
+      },
+    });
+
+    expect(course).toEqual({
       name: 'Curso de React',
-    },
+      tags: ['React'],
+    });
   });
 
-  expect(course).toEqual({
-    name: 'Curso de React',
+  it('should creates an empty array when tags are not provided', () => {
+    const course = CourseMapper.toDomain({
+      course:{
+        name: 'Curso de React',
+      },
+    });
+
+    expect(course).toEqual({
+      name: 'Curso de React',
+      tags: [],
+    });
   });
 });
 
-it('should convert a CourseDomain to a CourseAPI', () => {
-  const course = CourseMapper.toAPI({
-    name: 'Curso de React',
-  });
+describe('toAPI', () => {
+  it('should convert a CourseDomain to a CourseAPI', () => {
+    const course = CourseMapper.toAPI({
+      name: 'Curso de React',
+      tags: ['React'],
+    });
 
-  expect(course).toEqual({
-    course: {
-      name: 'Curso de React'
-    },
+    expect(course).toEqual({
+      course: {
+        name: 'Curso de React',
+        tags: ['React'],
+      },
+    });
   });
 });
